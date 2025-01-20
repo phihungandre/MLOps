@@ -1,5 +1,4 @@
 # Ignored Directories
-data/
 .ipynb_checkpoints/
 .idea/
 mlartifacts/
@@ -10,7 +9,6 @@ mlruns/
 *.csv
 *.xlsx
 *.pkl
-*.json
 *.log
 *.zip
 *.tar.gz
