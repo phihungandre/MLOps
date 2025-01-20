@@ -1,9 +1,9 @@
-dpe-v2-tertiaire-2.csv
-.idea/
-
 # Ignored Directories
 data/
 .ipynb_checkpoints/
+.idea/
+mlartifacts/
+mlruns/
 
 # Ignored File Types
 *.pdf
