@@ -1,3 +1,9 @@
+"""
+train.py
+
+This module contains the training of the random forest model.
+"""
+
 import pandas as pd
 import numpy as np
 
@@ -5,17 +11,17 @@ from sklearn.model_selection import train_test_split, GridSearchCV, KFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report
 
-import mlflow
+# import mlflow
 
-remote_server_uri = "http://localhost:8088"
-mlflow.set_tracking_uri(remote_server_uri)
+# REMOTE_SERVER_URI = "http://localhost:8088"
+# mlflow.set_tracking_uri(REMOTE_SERVER_URI)
 
-mlflow.set_experiment("experiment_01")
+# mlflow.set_experiment("experiment_01")
 
-mlflow.sklearn.autolog()
+# mlflow.sklearn.autolog()
 
-input_file = "../data/dpe_processed_20250120.csv"
-data = pd.read_csv(input_file)
+INPUT_FILE = "../data/dpe_processed_20250120.csv"
+data = pd.read_csv(INPUT_FILE)
 
 data.sample(frac=1, random_state=42).reset_index(drop=True)
 
@@ -33,9 +39,9 @@ rf = RandomForestClassifier()
 
 # Define the parameter grid
 param_grid = {
-        "n_estimators": [200, 300],  # Number of trees
-        "max_depth": [10],  # Maximum depth of the trees
-        "min_samples_leaf": [1, 5],  # Maximum depth of the trees
+    "n_estimators": [200, 300],  # Number of trees
+    "max_depth": [10],  # Maximum depth of the trees
+    "min_samples_leaf": [1, 5],  # Maximum depth of the trees
 }
 
 # Setup GridSearchCV with k-fold cross-validation
@@ -72,8 +78,6 @@ feature_names = X_train.columns
 
 # Create a dictionary mapping feature names to their importance
 importance_dict = dict(zip(feature_names, feature_importances))
-importance_dict = dict(
-    sorted(importance_dict.items(), key=lambda item: item[1], reverse=True)
-)
+importance_dict = dict(sorted(importance_dict.items(), key=lambda item: item[1], reverse=True))
 
 print(importance_dict)

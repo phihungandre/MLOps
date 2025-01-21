@@ -1,10 +1,14 @@
-import pandas as pd
+"""
+features.py
+
+This module contains functions and classes related to feature extraction and processing.
+"""
+
 import re
 import json
-from sklearn.preprocessing import OrdinalEncoder
 import datetime
-
-
+import pandas as pd
+from sklearn.preprocessing import OrdinalEncoder
 
 pd.options.display.max_columns = 100
 pd.options.display.max_rows = 60
@@ -12,7 +16,13 @@ pd.options.display.max_colwidth = 100
 pd.options.display.precision = 10
 pd.options.display.width = 160
 
+
 def rename_columns(columns):
+    """
+    Renaming columns to remove special characters and spaces
+    :param columns:
+    :return: renamed columns
+    """
     # en minuscule
     columns = [col.lower() for col in columns]
     # regex de remplacement
@@ -29,14 +39,15 @@ def rename_columns(columns):
 
     return columns
 
+
 data = pd.read_csv("../data/dpe-v2-tertiaire-2.csv")
 
 data.columns = rename_columns(data.columns)
 
-id_col = 'n_dpe'
-target = 'etiquette_dpe'
+ID_COL = "n_dpe"
+TARGET = "etiquette_dpe"
 
-data.dropna(subset=target, inplace=True)
+data.dropna(subset=TARGET, inplace=True)
 
 columns_categorical = [
     "periode_construction",
@@ -124,15 +135,18 @@ columns_int = [
     "conso_e_finale_energie_n_1",
 ]
 
+data = data[data["surface_utile"] < 9800]
+data = data[data["conso_kwhep_m2_an"] < 2000]
+
 for col in columns_int:
     data[col] = data[col].fillna(-1.0)
     data[col] = data[col].astype(int)
 
 map_target = {"A": 1, "B": 2, "C": 3, "D": 4, "E": 5, "F": 6, "G": 7, "H": 8, "I": 9}
-data[target] = data[target].apply(lambda d: map_target[d])
+data[TARGET] = data[TARGET].apply(lambda d: map_target[d])
 
 train_columns = columns_int + columns_categorical
-features = [id_col] + train_columns + [target]
+features = [ID_COL] + train_columns + [TARGET]
 
 data = data[features].copy()
 data.reset_index(drop=True, inplace=True)
