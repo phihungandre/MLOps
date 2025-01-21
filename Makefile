@@ -12,3 +12,6 @@ clean_data:
 
 train_model:
 	python src/train.py
+
+install:
+	pip install --upgrade pip && pip install -r requirements.txt
