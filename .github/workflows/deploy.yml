@@ -27,6 +27,13 @@ jobs:
         docker build -t phihungandre/gpt-api .
         docker push phihungandre/gpt-api
 
+    - name: Add SSH key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H 192.168.0.165 >> ~/.ssh/known_hosts
+
     - name: Deploy to VM
       run: |
         ssh phihungandre@192.168.0.165 "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 phihungandre/gpt-api"
