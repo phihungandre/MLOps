@@ -34,4 +34,4 @@ jobs:
 
     - name: Deploy to VM
       run: |
-        ssh -v phihungandre@192.168.0.165 "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 phihungandre/gpt-api"
+        ssh -o StrictHostKeyChecking=no phihungandre@192.168.0.165 "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 phihungandre/gpt-api"
