@@ -34,7 +34,7 @@ jobs:
 
     - name: Install Docker on VM
       run: |
-        ssh -o StrictHostKeyChecking=no phi_hung_andre@34.68.84.193 "
+        ssh -o StrictHostKeyChecking=no phi_hung_andre@${{ secrets.GCP_EXTERNAL_IP }} "
         sudo apt-get update &&
         sudo apt-get install -y docker.io"
 
