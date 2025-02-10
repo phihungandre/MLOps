@@ -34,4 +34,4 @@ jobs:
 
     - name: Deploy to VM
       run: |
-        ssh -o StrictHostKeyChecking=no your-username@${{ secrets.GCP_INSTANCE_NAME }}.${{ secrets.GCP_ZONE }}.${{ secrets.GCP_PROJECT }}.compute.internal "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 phihungandre/gpt-api"
+        ssh -o StrictHostKeyChecking=no phi_hung_andre@${{ secrets.GCP_INSTANCE_NAME }}.${{ secrets.GCP_ZONE }}.${{ secrets.GCP_PROJECT }}.compute.internal "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 phihungandre/gpt-api"
