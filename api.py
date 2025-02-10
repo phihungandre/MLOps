@@ -5,9 +5,6 @@ import os
 
 app = Flask(__name__)
 
-import tensorflow as tf
-print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
-
 #openai.api_key = 'your_api_key'
 
 # Load pre-trained model and tokenizer
