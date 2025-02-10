@@ -32,6 +32,12 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
 
+    - name: Install Docker on VM
+      run: |
+        ssh -o StrictHostKeyChecking=no phi_hung_andre@34.68.84.193 "
+        sudo apt-get update &&
+        sudo apt-get install -y docker.io"
+
     - name: Deploy to VM
       run: |
         ssh -o StrictHostKeyChecking=no phi_hung_andre@34.68.84.193 "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 phihungandre/gpt-api"
