@@ -26,8 +26,9 @@ jobs:
       run: |
         docker build -t phihungandre/gpt-api:latest .
         docker push phihungandre/gpt-api:latest
+
     - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@master
+      uses: google-github-actions/setup-gcloud@v0.2.0
       with:
         version: 'latest'
         service_account_key: ${{ secrets.GCP_SA_KEY }}
