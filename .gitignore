@@ -2,3 +2,4 @@ generated_text.txt
 
 mlartifacts/
 mlruns/
+__pycache__/
