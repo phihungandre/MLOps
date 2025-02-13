@@ -24,20 +24,20 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t phihungandre/gpt-api .
-        docker push phihungandre/gpt-api
-
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.5.3
+        docker build -t phihungandre/gpt-api:latest .
+        docker push phihungandre/gpt-api:latest
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
       with:
-        ssh-private-key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
+        version: 'latest'
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-    - name: Install Docker on VM
+    - name: Get GKE credentials
       run: |
-        ssh -o StrictHostKeyChecking=no phi_hung_andre@${{ secrets.GCP_EXTERNAL_IP }} "
-        sudo apt-get update &&
-        sudo apt-get install -y docker.io"
+        gcloud container clusters get-credentials gpt-cluster --zone us-central1-c
 
-    - name: Deploy to VM
+    - name: Deploy to GKE
       run: |
-        ssh -o StrictHostKeyChecking=no phi_hung_andre@${{ secrets.GCP_EXTERNAL_IP }} "docker pull phihungandre/gpt-api && docker run -d -p 5000:5000 --name gpt-container phihungandre/gpt-api"
+        kubectl apply -f deployment.yaml
+        kubectl apply -f service.yaml
